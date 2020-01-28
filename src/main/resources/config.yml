@@ -1,0 +1,32 @@
+Mysql:
+  DbType: 'mysql'
+  Host: 'localhost'
+  Port: '3306'
+  Username: 'root'
+  Password: 'Password'
+  Database: 'Database'
+  initialPoolSize: 2
+  maxIdleTime: 30
+  maxPoolSize: 10
+  minPoolSize: 3
+
+Messages:
+  Help:
+    /money set [name] [amount] - 设置一个账户的金钱数量
+    对应权限：money.accounts.set
+    /money take [name] [amount] - 扣除一个账户的金钱数量(不加自己的)
+    对应权限：money.accounts.take
+    /money give [name] [amount] - 增加一个账户的金钱数量(不扣自己的)
+    对应权限：money.accounts.give
+    /money remove [name] - 删除一个账户
+    对应权限：money.accounts.remove
+    /money create [name] - 添加一个账户(在玩家注册时自动添加)
+    对应权限：money.accounts.create
+    /money pay [name] [amount] - 转账给别人
+    对应权限：money.payment
+    /money help (command) - 查看指令和帮助
+    对应权限：money.help
+    /money  [name] - 查看别人有多少钱
+    对应权限：money.holdings.others
+    /money  - 查看自己有多少钱
+    对应权限：money.holdings
