@@ -1,17 +1,57 @@
 package com.github.startzyp.SuperEconomy.Config;
 
 public class DataBaseConfig {
+
     public static String Driver;
     public static String DbType;
     public static String Database;
     public static String Host;
     public static String Port;
-    public static String initialPoolSize;
-    public static String maxIdleTime;
-    public static String maxPoolSize;
-    public static String minPoolSize;
+    public static String Table;
+    public static int initialPoolSize;
+    public static int maxIdleTime;
+    public static int maxPoolSize;
+    public static int minPoolSize;
 
+    public static String getTable() {
+        return Table;
+    }
 
+    public static void setTable(String table) {
+        Table = table;
+    }
+
+    public static int getInitialPoolSize() {
+        return initialPoolSize;
+    }
+
+    public static void setInitialPoolSize(int initialPoolSize) {
+        DataBaseConfig.initialPoolSize = initialPoolSize;
+    }
+
+    public static int getMaxIdleTime() {
+        return maxIdleTime;
+    }
+
+    public static void setMaxIdleTime(int maxIdleTime) {
+        DataBaseConfig.maxIdleTime = maxIdleTime;
+    }
+
+    public static int getMaxPoolSize() {
+        return maxPoolSize;
+    }
+
+    public static void setMaxPoolSize(int maxPoolSize) {
+        DataBaseConfig.maxPoolSize = maxPoolSize;
+    }
+
+    public static int getMinPoolSize() {
+        return minPoolSize;
+    }
+
+    public static void setMinPoolSize(int minPoolSize) {
+        DataBaseConfig.minPoolSize = minPoolSize;
+    }
     public static String getDriver() {
         return Driver;
     }
@@ -36,35 +76,20 @@ public class DataBaseConfig {
         Database = database;
     }
 
-    public static String getInitialPoolSize() {
-        return initialPoolSize;
+
+    public static String getHost() {
+        return Host;
     }
 
-    public static void setInitialPoolSize(String initialPoolSize) {
-        DataBaseConfig.initialPoolSize = initialPoolSize;
+    public static void setHost(String host) {
+        Host = host;
     }
 
-    public static String getMaxIdleTime() {
-        return maxIdleTime;
+    public static String getPort() {
+        return Port;
     }
 
-    public static void setMaxIdleTime(String maxIdleTime) {
-        DataBaseConfig.maxIdleTime = maxIdleTime;
-    }
-
-    public static String getMaxPoolSize() {
-        return maxPoolSize;
-    }
-
-    public static void setMaxPoolSize(String maxPoolSize) {
-        DataBaseConfig.maxPoolSize = maxPoolSize;
-    }
-
-    public static String getMinPoolSize() {
-        return minPoolSize;
-    }
-
-    public static void setMinPoolSize(String minPoolSize) {
-        DataBaseConfig.minPoolSize = minPoolSize;
+    public static void setPort(String port) {
+        Port = port;
     }
 }

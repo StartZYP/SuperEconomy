@@ -1,12 +1,13 @@
 package com.github.startzyp.SuperEconomy.Util;
 
 import com.github.startzyp.SuperEconomy.Config.DataBaseConfig;
-import com.github.startzyp.SuperEconomy.main;
+import com.github.startzyp.SuperEconomy.Entity.EconomyEntity;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class c3p0Util {
@@ -15,13 +16,13 @@ public class c3p0Util {
     public c3p0Util() throws PropertyVetoException {
         source = new ComboPooledDataSource();
         source.setDriverClass(DataBaseConfig.getDriver());
-        source.setJdbcUrl("jdbc:"+DataBaseConfig.getDbType()+"://"+main.plugin.getConfig().getString("Mysql.Host")+":"+main.plugin.getConfig().getString("Mysql.Port")+"/"+main.plugin.getConfig().getString("Mysql.Database")+"?useUnicode=true&characterEncoding=utf-8");
-        source.setUser(main.plugin.getConfig().getString("Mysql.DbType"));
-        source.setPassword(main.plugin.getConfig().getString("Mysql.Database"));
-        source.setInitialPoolSize(main.plugin.getConfig().getInt("Mysql.initialPoolSize"));
-        source.setMaxIdleTime(main.plugin.getConfig().getInt("Data.maxIdleTime"));
-        source.setMaxPoolSize(main.plugin.getConfig().getInt("Mysql.maxPoolSize"));
-        source.setMinPoolSize(main.plugin.getConfig().getInt("Mysql.minPoolSize"));
+        source.setJdbcUrl("jdbc:"+DataBaseConfig.getDbType()+"://"+DataBaseConfig.getHost()+":"+DataBaseConfig.getPort()+"/"+DataBaseConfig.getDatabase()+"?useUnicode=true&characterEncoding=utf-8");
+        source.setUser(DataBaseConfig.getDbType());
+        source.setPassword(DataBaseConfig.getDatabase());
+        source.setInitialPoolSize(DataBaseConfig.getInitialPoolSize());
+        source.setMaxIdleTime(DataBaseConfig.getMaxIdleTime());
+        source.setMaxPoolSize(DataBaseConfig.getMaxPoolSize());
+        source.setMinPoolSize(DataBaseConfig.getMinPoolSize());
     }
 
     public static void InitDao(){
@@ -36,7 +37,6 @@ public class c3p0Util {
                     "  UNIQUE KEY `username` (`username`)\n" +
                     ") ENGINE=InnoDB AUTO_INCREMENT=32063 DEFAULT CHARSET=utf8;";
             PreparedStatement statement = connection.prepareStatement(sql);
-
             statement.executeUpdate();
             statement.close();
         }catch (SQLException e){
@@ -44,29 +44,65 @@ public class c3p0Util {
         }
     }
 
-    public static boolean hasEconmy(){
+    public static boolean hasEconmy(String PlayerName){
         try{
-            Connection connection = main.source.getConnection();
-            String sql = "SELECT id FROM " + t + " WHERE username=";
+            Connection connection = source.getConnection();
+            String sql = "SELECT id FROM "+ DataBaseConfig.Table +" WHERE username=?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1,"UUID");
-            statement.setString(2,"大王");
+            statement.setString(1,PlayerName.toLowerCase());
+            boolean aBoolean = statement.execute();
+            statement.close();
+            connection.close();
+            return aBoolean;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void CreateEconomy(String PlayerName){
+        try{
+            Connection connection = source.getConnection();
+            String sql = "INSERT INTO "+ DataBaseConfig.Table +" (username, balance, status) values (?, 0, 0)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,PlayerName);
             statement.executeUpdate();
             statement.close();
+            connection.close();
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
 
-    public static void CreateEconomy(){
+    public static EconomyEntity getEconomy(String PlayerName){
+        EconomyEntity economyEntity = new EconomyEntity(0, PlayerName, 0);
         try{
-            Connection connection = main.source.getConnection();
-            String sql = "";
+            Connection connection = source.getConnection();
+            String sql = "SELECT * FROM "+ DataBaseConfig.Table +" WHERE username=?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1,"UUID");
-            statement.setString(2,"大王");
+            statement.setString(1,PlayerName);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                economyEntity.setId(resultSet.getInt("id"));
+                economyEntity.setBalance(resultSet.getDouble("balance"));
+            }
+            statement.close();
+            connection.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return economyEntity;
+    }
+
+    public static void UpdataEconomy(String PlayerName,double balance){
+        try{
+            Connection connection = source.getConnection();
+            String sql = "INSERT INTO "+ DataBaseConfig.Table +" (username, balance, status) values (?, 0, 0)";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,PlayerName);
             statement.executeUpdate();
             statement.close();
+            connection.close();
         }catch (SQLException e){
             e.printStackTrace();
         }

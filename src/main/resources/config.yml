@@ -1,11 +1,12 @@
 Data:
   Driver: 'com.mysql.jdbc.Driver'
   DbType: 'mysql'
-  Host: 'localhost'
+  Host: '65.49.212.225'
   Port: '3306'
   Username: 'root'
   Password: 'Password'
-  Database: 'Database'
+  Database: 'plugin'
+  Tbale: 'iConomy'
   initialPoolSize: 2
   maxIdleTime: 30
   maxPoolSize: 10
