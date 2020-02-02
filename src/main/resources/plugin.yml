@@ -1,0 +1,6 @@
+name: SuperEconomy
+main: com.github.startzyp.SuperEconomy.main
+version: 1.0
+depend: [Vault]
+commands:
+  money:

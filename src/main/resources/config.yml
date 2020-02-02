@@ -2,11 +2,11 @@ Data:
   Driver: 'com.mysql.jdbc.Driver'
   DbType: 'mysql'
   Host: '65.49.212.225'
-  Port: '3306'
+  Port: 3306
   Username: 'root'
-  Password: 'Password'
+  Password: 'asdddd1511'
   Database: 'plugin'
-  Tbale: 'iConomy'
+  Table: 'iConomy'
   initialPoolSize: 2
   maxIdleTime: 30
   maxPoolSize: 10
@@ -19,10 +19,6 @@ Messages:
     - '对应权限：money.accounts.take'
     - '/money give [name] [amount] - 增加一个账户的金钱数量(不扣自己的)'
     - '对应权限：money.accounts.give'
-    - '/money remove [name] - 删除一个账户'
-    - '对应权限：money.accounts.remove'
-    - '/money create [name] - 添加一个账户(在玩家注册时自动添加)'
-    - '对应权限：money.accounts.create'
     - '/money pay [name] [amount] - 转账给别人'
     - '对应权限：money.payment'
     - '/money help (command) - 查看指令和帮助'
@@ -31,3 +27,5 @@ Messages:
     - '对应权限：money.holdings.others'
     - '/money  - 查看自己有多少钱'
     - '对应权限：money.holdings'
+  money: "你有"
+ThreadPeroid: 60

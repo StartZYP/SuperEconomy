@@ -47,7 +47,6 @@ public class VaultAPI extends AbstractEconomy {
 
     @Override
     public boolean hasAccount(String s) {
-        s = s.toLowerCase();
         if (main.onlineEconomy.containsKey(s)){
             return true;
         }else {
@@ -60,9 +59,9 @@ public class VaultAPI extends AbstractEconomy {
         return hasAccount(s);
     }
 
+
     @Override
     public double getBalance(String s) {
-        s = s.toLowerCase();
         EconomyEntity economyEntity;
         if (main.onlineEconomy.containsKey(s)){
             economyEntity = main.onlineEconomy.get(s);
@@ -90,7 +89,6 @@ public class VaultAPI extends AbstractEconomy {
 
     @Override
     public EconomyResponse withdrawPlayer(String s, double v) {
-        s = s.toLowerCase();
         if (!hasAccount(s)) {
             return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "The player does not have an account!");
         }
@@ -117,7 +115,6 @@ public class VaultAPI extends AbstractEconomy {
 
     @Override
     public EconomyResponse depositPlayer(String s, double v) {
-        s = s.toLowerCase();
         if (!hasAccount(s)) {
             return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "The player does not have an account!");
         }

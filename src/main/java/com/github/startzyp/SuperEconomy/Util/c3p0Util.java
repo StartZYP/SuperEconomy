@@ -2,32 +2,15 @@ package com.github.startzyp.SuperEconomy.Util;
 
 import com.github.startzyp.SuperEconomy.Config.DataBaseConfig;
 import com.github.startzyp.SuperEconomy.Entity.EconomyEntity;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-import java.beans.PropertyVetoException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 
 public class c3p0Util {
-    public static ComboPooledDataSource source = null;
-
-    public c3p0Util() throws PropertyVetoException {
-        source = new ComboPooledDataSource();
-        source.setDriverClass(DataBaseConfig.getDriver());
-        source.setJdbcUrl("jdbc:"+DataBaseConfig.getDbType()+"://"+DataBaseConfig.getHost()+":"+DataBaseConfig.getPort()+"/"+DataBaseConfig.getDatabase()+"?useUnicode=true&characterEncoding=utf-8");
-        source.setUser(DataBaseConfig.getDbType());
-        source.setPassword(DataBaseConfig.getDatabase());
-        source.setInitialPoolSize(DataBaseConfig.getInitialPoolSize());
-        source.setMaxIdleTime(DataBaseConfig.getMaxIdleTime());
-        source.setMaxPoolSize(DataBaseConfig.getMaxPoolSize());
-        source.setMinPoolSize(DataBaseConfig.getMinPoolSize());
-    }
 
     public static void InitDao(){
         try{
-            Connection connection = source.getConnection();
+            Connection connection = DriverManager.getConnection(DataBaseConfig.url, DataBaseConfig.User, DataBaseConfig.Password);
             String sql = "CREATE TABLE IF NOT EXISTS `iConomy` (\n" +
                     "  `id` int(255) NOT NULL AUTO_INCREMENT,\n" +
                     "  `username` varchar(32) NOT NULL,\n" +
@@ -35,25 +18,30 @@ public class c3p0Util {
                     "  `status` int(2) NOT NULL DEFAULT '0',\n" +
                     "  PRIMARY KEY (`id`),\n" +
                     "  UNIQUE KEY `username` (`username`)\n" +
-                    ") ENGINE=InnoDB AUTO_INCREMENT=32063 DEFAULT CHARSET=utf8;";
+                    ") ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
             statement.close();
+            connection.close();
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
 
     public static boolean hasEconmy(String PlayerName){
+        PlayerName = PlayerName.toLowerCase();
         try{
-            Connection connection = source.getConnection();
+            Connection connection = DriverManager.getConnection(DataBaseConfig.url, DataBaseConfig.User, DataBaseConfig.Password);
+            System.out.println(DataBaseConfig.url);
+            System.out.println(DataBaseConfig.Table);
             String sql = "SELECT id FROM "+ DataBaseConfig.Table +" WHERE username=?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1,PlayerName.toLowerCase());
-            boolean aBoolean = statement.execute();
+            statement.setString(1,PlayerName);
+            ResultSet resultSet = statement.executeQuery();
+            boolean next = resultSet.next();
             statement.close();
             connection.close();
-            return aBoolean;
+            return next;
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -61,8 +49,9 @@ public class c3p0Util {
     }
 
     public static void CreateEconomy(String PlayerName){
+        PlayerName = PlayerName.toLowerCase();
         try{
-            Connection connection = source.getConnection();
+            Connection connection = DriverManager.getConnection(DataBaseConfig.url, DataBaseConfig.User, DataBaseConfig.Password);
             String sql = "INSERT INTO "+ DataBaseConfig.Table +" (username, balance, status) values (?, 0, 0)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1,PlayerName);
@@ -75,9 +64,10 @@ public class c3p0Util {
     }
 
     public static EconomyEntity getEconomy(String PlayerName){
+        PlayerName = PlayerName.toLowerCase();
         EconomyEntity economyEntity = new EconomyEntity(0, PlayerName, 0);
         try{
-            Connection connection = source.getConnection();
+            Connection connection = DriverManager.getConnection(DataBaseConfig.url, DataBaseConfig.User, DataBaseConfig.Password);
             String sql = "SELECT * FROM "+ DataBaseConfig.Table +" WHERE username=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1,PlayerName);
@@ -95,11 +85,13 @@ public class c3p0Util {
     }
 
     public static void UpdataEconomy(String PlayerName,double balance){
+        PlayerName = PlayerName.toLowerCase();
         try{
-            Connection connection = source.getConnection();
-            String sql = "INSERT INTO "+ DataBaseConfig.Table +" (username, balance, status) values (?, 0, 0)";
+            Connection connection = DriverManager.getConnection(DataBaseConfig.url, DataBaseConfig.User, DataBaseConfig.Password);
+            String sql = "UPDATE "+ DataBaseConfig.Table +" SET balance = ? WHERE username = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1,PlayerName);
+            statement.setDouble(1,balance);
+            statement.setString(2,PlayerName);
             statement.executeUpdate();
             statement.close();
             connection.close();

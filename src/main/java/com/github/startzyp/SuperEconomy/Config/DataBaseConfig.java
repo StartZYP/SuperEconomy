@@ -2,16 +2,35 @@ package com.github.startzyp.SuperEconomy.Config;
 
 public class DataBaseConfig {
 
+    public static String url;
     public static String Driver;
     public static String DbType;
     public static String Database;
     public static String Host;
     public static String Port;
     public static String Table;
+    public static String User;
+    public static String Password;
     public static int initialPoolSize;
     public static int maxIdleTime;
     public static int maxPoolSize;
     public static int minPoolSize;
+
+    public static String getUser() {
+        return User;
+    }
+
+    public static void setUser(String user) {
+        User = user;
+    }
+
+    public static String getPassword() {
+        return Password;
+    }
+
+    public static void setPassword(String password) {
+        Password = password;
+    }
 
     public static String getTable() {
         return Table;
