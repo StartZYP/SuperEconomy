@@ -1,5 +1,5 @@
 Data:
-  Driver: 'com.mysql.jdbc.Driver'
+  Driver: 'com.mysql.cj.jdbc.Driver'
   DbType: 'mysql'
   Host: 'localhost'
   Port: 3306
@@ -27,5 +27,4 @@ Messages:
     - '对应权限：money.holdings.others'
     - '/money  - 查看自己有多少钱'
     - '对应权限：money.holdings'
-  money: "你有"
 ThreadPeroid: 60

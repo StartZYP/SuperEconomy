@@ -67,7 +67,6 @@ public class VaultAPI extends AbstractEconomy {
             economyEntity = main.onlineEconomy.get(s);
         }else {
             economyEntity = c3p0Util.getEconomy(s);
-            main.onlineEconomy.put(s,economyEntity);
         }
         return economyEntity.getBalance();
     }
@@ -100,11 +99,11 @@ public class VaultAPI extends AbstractEconomy {
         EconomyEntity economyEntity;
         if (main.onlineEconomy.containsKey(s)){
             economyEntity =main.onlineEconomy.get(s);
+            economyEntity.setBalance(balance);
+            main.onlineEconomy.put(s,economyEntity);
         }else {
-            economyEntity = c3p0Util.getEconomy(s);
+            c3p0Util.UpdataEconomy(s,balance);
         }
-        economyEntity.setBalance(balance);
-        main.onlineEconomy.put(s,economyEntity);
         return new EconomyResponse(v, balance, EconomyResponse.ResponseType.SUCCESS, "");
     }
 
@@ -121,14 +120,16 @@ public class VaultAPI extends AbstractEconomy {
         if (v<0){
             return new EconomyResponse(0.0D, 0.0D, EconomyResponse.ResponseType.FAILURE, "Value is less than zero!");
         }
+        double balance = getBalance(s);
+        balance += v;
         EconomyEntity economyEntity;
         if (main.onlineEconomy.containsKey(s)){
             economyEntity =main.onlineEconomy.get(s);
+            economyEntity.setBalance(balance);
+            main.onlineEconomy.put(s,economyEntity);
         }else {
-            economyEntity = c3p0Util.getEconomy(s);
+            c3p0Util.UpdataEconomy(s,balance);
         }
-        economyEntity.setBalance(economyEntity.getBalance()+v);
-        main.onlineEconomy.put(s,economyEntity);
         return new EconomyResponse(v, 0.0D, EconomyResponse.ResponseType.SUCCESS, "");
     }
 

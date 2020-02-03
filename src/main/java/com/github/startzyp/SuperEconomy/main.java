@@ -15,7 +15,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -28,6 +30,7 @@ public class main extends JavaPlugin {
     public static Economy economy;
     private long ThreadPeroid = 60;
     private BukkitTask bukkitTask;
+    public static List<String> help = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -70,16 +73,11 @@ public class main extends JavaPlugin {
         saveDefaultConfig();
         //数据库配置初始化
         DataBaseConfig.setDriver(getConfig().getString("Data.Driver"));
-        DataBaseConfig.setDbType(getConfig().getString("Data.DbType"));
-        DataBaseConfig.setDatabase(getConfig().getString("Data.Database"));
         DataBaseConfig.setTable(getConfig().getString("Data.Table"));
         DataBaseConfig.setUser(getConfig().getString("Data.Username"));
         DataBaseConfig.setPassword(getConfig().getString("Data.Password"));
-        DataBaseConfig.setInitialPoolSize(getConfig().getInt("Data.initialPoolSize"));
-        DataBaseConfig.setMaxIdleTime(getConfig().getInt("Data.maxIdleTime"));
-        DataBaseConfig.setMaxPoolSize(getConfig().getInt("Data.maxPoolSize"));
-        DataBaseConfig.setMinPoolSize(getConfig().getInt("Data.minPoolSize"));
         DataBaseConfig.url = "jdbc:mysql://" + getConfig().getString("Data.Host") + ":" + getConfig().getString("Data.Port")  + "/" + getConfig().getString("Data.Database") + "?useUnicode=true&characterEncoding=utf-8&useSSL=false";
         ThreadPeroid = getConfig().getLong("ThreadPeroid");
+        help = getConfig().getStringList("Messages.Help");
     }
 }

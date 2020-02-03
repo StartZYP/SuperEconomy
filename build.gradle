@@ -13,7 +13,7 @@ plugins {
 }
 
 group 'com.github.startzyp'
-version '1.5-SNAPSHOT'
+version '2.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 

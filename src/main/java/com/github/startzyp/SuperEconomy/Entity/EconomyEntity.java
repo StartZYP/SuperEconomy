@@ -4,11 +4,13 @@ public class EconomyEntity {
     private int id;
     private String PlayerName;
     private double balance;
+    private double lastbalance;
 
     public EconomyEntity(int id, String playerName, double balance) {
         this.id = id;
         PlayerName = playerName;
         this.balance = balance;
+        lastbalance = balance;
     }
 
     @Override
@@ -17,7 +19,16 @@ public class EconomyEntity {
                 "id=" + id +
                 ", PlayerName='" + PlayerName + '\'' +
                 ", balance=" + balance +
+                ", lastbalance=" + lastbalance +
                 '}';
+    }
+
+    public double getLastbalance() {
+        return lastbalance;
+    }
+
+    public void setLastbalance(double lastbalance) {
+        this.lastbalance = lastbalance;
     }
 
     public int getId() {
