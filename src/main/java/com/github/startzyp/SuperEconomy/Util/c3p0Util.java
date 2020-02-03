@@ -10,6 +10,7 @@ public class c3p0Util {
 
     public static void InitDao(){
         try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(DataBaseConfig.url, DataBaseConfig.User, DataBaseConfig.Password);
             String sql = "CREATE TABLE IF NOT EXISTS `iConomy` (\n" +
                     "  `id` int(255) NOT NULL AUTO_INCREMENT,\n" +
@@ -23,7 +24,7 @@ public class c3p0Util {
             statement.executeUpdate();
             statement.close();
             connection.close();
-        }catch (SQLException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -31,6 +32,7 @@ public class c3p0Util {
     public static boolean hasEconmy(String PlayerName){
         PlayerName = PlayerName.toLowerCase();
         try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(DataBaseConfig.url, DataBaseConfig.User, DataBaseConfig.Password);
             System.out.println(DataBaseConfig.url);
             System.out.println(DataBaseConfig.Table);
@@ -42,7 +44,7 @@ public class c3p0Util {
             statement.close();
             connection.close();
             return next;
-        }catch (SQLException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
         return false;
@@ -51,6 +53,7 @@ public class c3p0Util {
     public static void CreateEconomy(String PlayerName){
         PlayerName = PlayerName.toLowerCase();
         try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(DataBaseConfig.url, DataBaseConfig.User, DataBaseConfig.Password);
             String sql = "INSERT INTO "+ DataBaseConfig.Table +" (username, balance, status) values (?, 0, 0)";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -58,7 +61,7 @@ public class c3p0Util {
             statement.executeUpdate();
             statement.close();
             connection.close();
-        }catch (SQLException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -67,6 +70,7 @@ public class c3p0Util {
         PlayerName = PlayerName.toLowerCase();
         EconomyEntity economyEntity = new EconomyEntity(0, PlayerName, 0);
         try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(DataBaseConfig.url, DataBaseConfig.User, DataBaseConfig.Password);
             String sql = "SELECT * FROM "+ DataBaseConfig.Table +" WHERE username=?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -78,7 +82,7 @@ public class c3p0Util {
             }
             statement.close();
             connection.close();
-        }catch (SQLException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
         return economyEntity;

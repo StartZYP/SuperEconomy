@@ -1,10 +1,10 @@
 Data:
   Driver: 'com.mysql.jdbc.Driver'
   DbType: 'mysql'
-  Host: '65.49.212.225'
+  Host: 'localhost'
   Port: 3306
   Username: 'root'
-  Password: 'asdddd1511'
+  Password: 'asd123456'
   Database: 'plugin'
   Table: 'iConomy'
   initialPoolSize: 2

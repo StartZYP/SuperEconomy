@@ -31,11 +31,6 @@ public class main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         logger = Bukkit.getLogger();
         plugin = this;
         getServer().getPluginManager().registerEvents(new event(), this);
