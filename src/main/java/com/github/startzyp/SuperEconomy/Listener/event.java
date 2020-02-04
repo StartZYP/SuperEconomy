@@ -15,12 +15,11 @@ public class event implements Listener {
     @EventHandler
     public void PlayerJoingame(PlayerJoinEvent event){
         String name = event.getPlayer().getName();
-        if (c3p0Util.hasEconmy(name)){
-            EconomyEntity economy = c3p0Util.getEconomy(name);
-            main.onlineEconomy.put(name,economy);
-        }else {
+        if (!c3p0Util.hasEconmy(name)){
             c3p0Util.CreateEconomy(name);
         }
+        EconomyEntity economy = c3p0Util.getEconomy(name);
+        main.onlineEconomy.put(name,economy);
     }
     @EventHandler
     public void PlayerQuitGame(PlayerQuitEvent event){
